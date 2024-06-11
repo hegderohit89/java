@@ -1,0 +1,54 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.3
+    helm.sh/resource-policy: keep
+  labels:
+    rtf.mulesoft.com/agentNamespace: rtf
+    rtf.mulesoft.com/component: agent
+  name: kubernetestemplates.rtf.mulesoft.com
+spec:
+  conversion:
+    strategy: None
+  group: rtf.mulesoft.com
+  names:
+    kind: KubernetesTemplate
+    listKind: KubernetesTemplateList
+    plural: kubernetestemplates
+    shortNames:
+    - kt
+    singular: kubernetestemplate
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: KubernetesTemplate describes an RTF kubernetes resource template
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: KubernetesTemplateSpec describes an RTF kubernetes template
+              spec
+            properties:
+              pod:
+                description: PodTemplateSpec describes an RTF pod template spec
+                properties:
+                  env:
+                    additionalProperties:
+                      type: string
+                    description: Env defines the environment variables for
+                      the app container
+                    type: object
+                type: object
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
